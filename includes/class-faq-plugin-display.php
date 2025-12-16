@@ -166,6 +166,7 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 				$faq_post_id       = $post->ID;
 				include $template;
 			} else {
+				echo '<h2 class="faq-plugin-heading">' . esc_html__( 'Related FAQ', 'faq-plugin' ) . '</h2>';
 				echo '<div class="faq-plugin-accordion" id="' . esc_attr( $prefix ) . '">';
 
 				foreach ( $faqs as $index => $faq ) {

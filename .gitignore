@@ -1,0 +1,28 @@
+# OS/Editor
+.DS_Store
+.idea/
+.vscode/
+Thumbs.db
+
+# PHP / Composer
+vendor/
+composer.lock
+
+# Node / Frontend
+node_modules/
+npm-debug.log*
+yarn.lock
+pnpm-lock.yaml
+
+# Logs
+*.log
+
+# PHPUnit / WP scaffold
+bin/
+tmp/
+.phpunit.result.cache
+wp-tests-config.php
+
+# Misc
+*.zip
+*.bak
