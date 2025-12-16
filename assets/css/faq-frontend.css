@@ -2,9 +2,10 @@
 	border: 1px solid #e2e2e2;
 	border-radius: 4px;
 	overflow: hidden;
+	margin-bottom: 26px;
 }
 
-.faq-plugin-item + .faq-plugin-item {
+.faq-plugin-item+.faq-plugin-item {
 	border-top: 1px solid #e2e2e2;
 }
 
