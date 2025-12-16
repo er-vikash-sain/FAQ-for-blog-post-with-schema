@@ -44,11 +44,30 @@
 	height: 12px;
 	border-left: 2px solid #555;
 	border-bottom: 2px solid #555;
-	transform: rotate(-45deg);
+	transform: rotate(45deg);
 	transform-origin: center;
 	transition: transform 0.2s ease;
 }
 
 .faq-plugin-toggle[aria-expanded="true"] .faq-plugin-icon {
-	transform: rotate(135deg);
+	transform: rotate(-135deg);
+}
+
+.faq-plugin-question__text {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.faq-plugin-question__number {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 24px;
+	height: 24px;
+	border-radius: 50%;
+	background: #2271b1;
+	color: #fff;
+	font-size: 13px;
+	line-height: 1;
 }

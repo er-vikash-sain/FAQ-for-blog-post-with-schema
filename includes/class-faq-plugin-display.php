@@ -185,7 +185,10 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 								aria-controls="<?php echo esc_attr( $panel_id ); ?>"
 								id="<?php echo esc_attr( $button_id ); ?>"
 							>
-								<span class="faq-plugin-question__text"><?php echo esc_html( $question ); ?></span>
+								<span class="faq-plugin-question__text">
+									<span class="faq-plugin-question__number"><?php echo esc_html( $index + 1 ); ?></span>
+									<span><?php echo esc_html( $question ); ?></span>
+								</span>
 								<span class="faq-plugin-icon" aria-hidden="true"></span>
 							</button>
 						</h3>
