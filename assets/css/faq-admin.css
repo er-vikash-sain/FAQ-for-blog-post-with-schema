@@ -1,0 +1,12 @@
+.faq-plugin-meta-wrap .faq-plugin-row {
+	background: #fff;
+	border: 1px solid #dcdcde;
+	padding: 12px;
+	margin-bottom: 10px;
+}
+
+.faq-plugin-meta-wrap .faq-plugin-row-actions {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}
