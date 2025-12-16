@@ -186,7 +186,7 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 								id="<?php echo esc_attr( $button_id ); ?>"
 							>
 								<span class="faq-plugin-question__text">
-									<span class="faq-plugin-question__number"><?php echo esc_html( $index + 1 ); ?></span>
+									<span class="faq-plugin-question__number"><?php echo esc_html( $index + 1 ); ?>. </span>
 									<span><?php echo esc_html( $question ); ?></span>
 								</span>
 								<span class="faq-plugin-icon" aria-hidden="true"></span>
