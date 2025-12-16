@@ -63,11 +63,11 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	min-width: 24px;
+	/*min-width: 24px;
 	height: 24px;
 	border-radius: 50%;
-	/*background: #2271b1;
-	color: #fff;*/
-	font-size: 13px;
+	background: #2271b1;
+	color: #fff;
+	font-size: 13px;*/
 	line-height: 1;
 }
