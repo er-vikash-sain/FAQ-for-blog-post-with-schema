@@ -20,6 +20,9 @@ define( 'FAQ_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 define( 'FAQ_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'FAQ_PLUGIN_OPTION_DISPLAY_POSITION', 'faq_plugin_display_position' );
 define( 'FAQ_PLUGIN_OPTION_DELETE_DATA', 'faq_plugin_delete_data_on_uninstall' );
+define( 'FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN', 'faq_plugin_first_item_open' );
+define( 'FAQ_PLUGIN_OPTION_Q_ICON_COLOR', 'faq_plugin_q_icon_color' );
+define( 'FAQ_PLUGIN_OPTION_Q_BG_COLOR', 'faq_plugin_q_bg_color' );
 define( 'FAQ_PLUGIN_META_KEY', 'faq_plugin_faqs' );
 
 require_once FAQ_PLUGIN_DIR . 'includes/class-faq-plugin.php';
@@ -36,6 +39,15 @@ function faq_plugin_activate() {
 
 	if ( false === get_option( FAQ_PLUGIN_OPTION_DELETE_DATA ) ) {
 		update_option( FAQ_PLUGIN_OPTION_DELETE_DATA, 0 );
+	}
+	if ( false === get_option( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN ) ) {
+		update_option( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN, 1 );
+	}
+	if ( false === get_option( FAQ_PLUGIN_OPTION_Q_ICON_COLOR ) ) {
+		update_option( FAQ_PLUGIN_OPTION_Q_ICON_COLOR, '#6366F1' );
+	}
+	if ( false === get_option( FAQ_PLUGIN_OPTION_Q_BG_COLOR ) ) {
+		update_option( FAQ_PLUGIN_OPTION_Q_BG_COLOR, '#E0E7FF' );
 	}
 }
 register_activation_hook( __FILE__, 'faq_plugin_activate' );

@@ -166,44 +166,38 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 				$faq_post_id       = $post->ID;
 				include $template;
 			} else {
-				echo '<h2 class="faq-plugin-heading">' . esc_html__( 'Related FAQ', 'faq-plugin' ) . '</h2>';
-				echo '<div class="faq-plugin-accordion" id="' . esc_attr( $prefix ) . '">';
+				echo '<div class="faq-accordion faq-plugin-accordion space-y-4" id="' . esc_attr( $prefix ) . '">';
+
+				$first_item_open = '1' === get_option( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN, '1' );
+				$icon_color = $this->get_color_option( FAQ_PLUGIN_OPTION_Q_ICON_COLOR, '#6366F1' );
+				$bg_color = $this->get_color_option( FAQ_PLUGIN_OPTION_Q_BG_COLOR, '#E0E7FF' );
 
 				foreach ( $faqs as $index => $faq ) {
 					$question  = isset( $faq['question'] ) ? $faq['question'] : '';
 					$answer    = isset( $faq['answer'] ) ? $faq['answer'] : '';
-					$item_id   = $prefix . '-item-' . $index;
-					$button_id = $item_id . '-button';
-					$panel_id  = $item_id . '-panel';
+					$is_first  = 0 === $index && $first_item_open;
+					$style_attr = sprintf(
+						' style="--faq-q-color:%s;--faq-q-bg-color:%s;"',
+						esc_attr( $icon_color ),
+						esc_attr( $bg_color )
+					);
 					?>
-					<div class="faq-plugin-item">
-						<h3 class="faq-plugin-question">
-							<button
-								type="button"
-								class="faq-plugin-toggle"
-								aria-expanded="false"
-								aria-controls="<?php echo esc_attr( $panel_id ); ?>"
-								id="<?php echo esc_attr( $button_id ); ?>"
-							>
-								<span class="faq-plugin-question__text">
-									<span class="faq-plugin-question__number"><?php echo esc_html( $index + 1 ); ?>. </span>
-									<span><?php echo esc_html( $question ); ?></span>
-								</span>
-								<span class="faq-plugin-icon" aria-hidden="true"></span>
-							</button>
-						</h3>
-						<div
-							id="<?php echo esc_attr( $panel_id ); ?>"
-							class="faq-plugin-answer"
-							role="region"
-							aria-labelledby="<?php echo esc_attr( $button_id ); ?>"
-							hidden
-						>
-							<div class="faq-plugin-answer__content">
-								<?php echo wp_kses_post( wpautop( $answer ) ); ?>
-							</div>
+					<details class="faq-item faq-plugin-item border border-[#E1E5ED] dark:border-[#2C2F36] rounded-xl bg-white dark:!bg-transparent shadow-sm transition hover:shadow-lg"<?php echo $is_first ? ' open' : ''; ?><?php echo $style_attr; ?>>
+						<summary class="flex items-center justify-between gap-4 cursor-pointer !px-4 md:!px-7 !py-4 text-lg font-semibold text-primarySN dark:text-whiteSN">
+							<span class="flex items-start gap-3">
+								<span class="shrink-0 inline-flex size-8 md:size-10 rounded-full bg-secondarySN/10 dark:bg-transparent dark:border dark:!border-white text-secondarySN dark:text-secondarySNHover items-center justify-center font-semibold text-base">Q</span>
+								<span class="text-base md:text-lg leading-snug"><?php echo esc_html( $question ); ?></span>
+							</span>
+							<span aria-hidden="true" class="shrink-0 ml-4 flex size-8 md:size-10 items-center justify-center rounded-full border border-[#E1E5ED] dark:border-[#2C2F36] text-secondarySN dark:text-secondarySNHover">
+								<svg class="faq-arrow size-4 md:size-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+									<path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+								</svg>
+							</span>
+						</summary>
+						<div class="faq-body transition-[max-height] duration-300 ease-in-out !px-4 md:!px-7 !pb-4 !pt-3 text-base text-primarySN dark:text-whiteSN/80 leading-relaxed border-t border-[#E1E5ED] dark:border-white">
+							<?php echo wp_kses_post( wpautop( $answer ) ); ?>
 						</div>
-					</div>
+					</details>
 					<?php
 				}
 
@@ -243,7 +237,7 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 			wp_enqueue_script(
 				'faq-plugin-frontend',
 				FAQ_PLUGIN_URL . 'assets/js/faq-frontend.js',
-				array(),
+				array( 'jquery' ),
 				FAQ_PLUGIN_VERSION,
 				true
 			);
@@ -262,6 +256,26 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 			}
 
 			return $faqs;
+		}
+
+		/**
+		 * Get sanitized color option value.
+		 *
+		 * @param string $option  Option name.
+		 * @param string $default Default fallback.
+		 * @return string
+		 */
+		private function get_color_option( $option, $default ) {
+			$value = get_option( $option, $default );
+			if ( function_exists( 'sanitize_hex_color' ) ) {
+				$value = sanitize_hex_color( $value );
+			}
+
+			if ( empty( $value ) ) {
+				return $default;
+			}
+
+			return $value;
 		}
 
 		/**
