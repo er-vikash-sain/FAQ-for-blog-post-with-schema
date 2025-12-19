@@ -166,7 +166,8 @@ if ( ! class_exists( 'FAQ_Plugin_Display' ) ) {
 				$faq_post_id       = $post->ID;
 				include $template;
 			} else {
-				echo '<div class="faq-accordion faq-plugin-accordion space-y-4" id="' . esc_attr( $prefix ) . '">';
+				echo '<h3 style="margin-top:25px;">Related FAQs</h3>';
+				echo '<div class="faq-accordion faq-plugin-accordion space-y-4" style="margin-bottom:20px;" id="' . esc_attr( $prefix ) . '">';
 
 				$first_item_open = '1' === get_option( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN, '1' );
 				$icon_color = $this->get_color_option( FAQ_PLUGIN_OPTION_Q_ICON_COLOR, '#6366F1' );

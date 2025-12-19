@@ -2,10 +2,14 @@
    FAQ ACCORDION – BASE
 ========================= */
 
+.space-y-4> :not([hidden])~ :not([hidden]) {
+	margin-top: 1rem;
+}
+
 .faq-accordion {
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	gap: 6px;
 }
 
 /* =========================
@@ -90,7 +94,7 @@
 /* QUESTION TEXT */
 .faq-item summary span>span:last-child {
 	font-size: 16px;
-	line-height: 1.4;
+	line-height: 2.2;
 }
 
 @media (min-width: 768px) {
