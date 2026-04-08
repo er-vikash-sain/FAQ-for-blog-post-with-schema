@@ -87,6 +87,36 @@ if ( ! class_exists( 'FAQ_Plugin_Admin' ) ) {
 				)
 			);
 
+			register_setting(
+				'faq_plugin_settings',
+				FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN,
+				array(
+					'type'              => 'boolean',
+					'sanitize_callback' => array( $this, 'sanitize_first_item_open' ),
+					'default'           => 1,
+				)
+			);
+
+			register_setting(
+				'faq_plugin_settings',
+				FAQ_PLUGIN_OPTION_Q_ICON_COLOR,
+				array(
+					'type'              => 'string',
+					'sanitize_callback' => 'sanitize_hex_color',
+					'default'           => '#6366F1',
+				)
+			);
+
+			register_setting(
+				'faq_plugin_settings',
+				FAQ_PLUGIN_OPTION_Q_BG_COLOR,
+				array(
+					'type'              => 'string',
+					'sanitize_callback' => 'sanitize_hex_color',
+					'default'           => '#E0E7FF',
+				)
+			);
+
 			add_settings_section(
 				'faq_plugin_display_section',
 				__( 'Display Settings', 'faq-plugin' ),
@@ -106,6 +136,30 @@ if ( ! class_exists( 'FAQ_Plugin_Admin' ) ) {
 				FAQ_PLUGIN_OPTION_DELETE_DATA,
 				__( 'Delete Data on Uninstall', 'faq-plugin' ),
 				array( $this, 'render_delete_data_field' ),
+				'faq-plugin',
+				'faq_plugin_display_section'
+			);
+
+			add_settings_field(
+				FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN,
+				__( 'First Item Open', 'faq-plugin' ),
+				array( $this, 'render_first_item_open_field' ),
+				'faq-plugin',
+				'faq_plugin_display_section'
+			);
+
+			add_settings_field(
+				FAQ_PLUGIN_OPTION_Q_ICON_COLOR,
+				__( 'Q & Arrow Color', 'faq-plugin' ),
+				array( $this, 'render_q_icon_color_field' ),
+				'faq-plugin',
+				'faq_plugin_display_section'
+			);
+
+			add_settings_field(
+				FAQ_PLUGIN_OPTION_Q_BG_COLOR,
+				__( 'Q Background Color', 'faq-plugin' ),
+				array( $this, 'render_q_bg_color_field' ),
 				'faq-plugin',
 				'faq_plugin_display_section'
 			);
@@ -133,6 +187,16 @@ if ( ! class_exists( 'FAQ_Plugin_Admin' ) ) {
 		 * @return int
 		 */
 		public function sanitize_delete_data( $value ) {
+			return ( isset( $value ) && '1' === (string) $value ) ? 1 : 0;
+		}
+
+		/**
+		 * Sanitize first item open setting.
+		 *
+		 * @param mixed $value Submitted value.
+		 * @return int
+		 */
+		public function sanitize_first_item_open( $value ) {
 			return ( isset( $value ) && '1' === (string) $value ) ? 1 : 0;
 		}
 
@@ -170,6 +234,45 @@ if ( ! class_exists( 'FAQ_Plugin_Admin' ) ) {
 				<input type="checkbox" name="<?php echo esc_attr( FAQ_PLUGIN_OPTION_DELETE_DATA ); ?>" value="1" <?php checked( $value, 1 ); ?> />
 				<?php esc_html_e( 'Remove plugin data (settings + FAQ meta) when uninstalling.', 'faq-plugin' ); ?>
 			</label>
+			<?php
+		}
+
+		/**
+		 * Render first item open field.
+		 */
+		public function render_first_item_open_field() {
+			$value = (int) get_option( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN, 1 );
+			?>
+			<label>
+				<input type="checkbox" name="<?php echo esc_attr( FAQ_PLUGIN_OPTION_FIRST_ITEM_OPEN ); ?>" value="1" <?php checked( $value, 1 ); ?> />
+				<?php esc_html_e( 'Open the first accordion item on page load.', 'faq-plugin' ); ?>
+			</label>
+			<?php
+		}
+
+		/**
+		 * Render Q & arrow color field.
+		 */
+		public function render_q_icon_color_field() {
+			$value = get_option( FAQ_PLUGIN_OPTION_Q_ICON_COLOR, '#6366F1' );
+			?>
+			<input type="color" name="<?php echo esc_attr( FAQ_PLUGIN_OPTION_Q_ICON_COLOR ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<p class="description">
+				<?php esc_html_e( 'Sets the color for the "Q" badge and arrow icon.', 'faq-plugin' ); ?>
+			</p>
+			<?php
+		}
+
+		/**
+		 * Render Q background color field.
+		 */
+		public function render_q_bg_color_field() {
+			$value = get_option( FAQ_PLUGIN_OPTION_Q_BG_COLOR, '#E0E7FF' );
+			?>
+			<input type="color" name="<?php echo esc_attr( FAQ_PLUGIN_OPTION_Q_BG_COLOR ); ?>" value="<?php echo esc_attr( $value ); ?>" />
+			<p class="description">
+				<?php esc_html_e( 'Sets the background color for the "Q" badge.', 'faq-plugin' ); ?>
+			</p>
 			<?php
 		}
 
